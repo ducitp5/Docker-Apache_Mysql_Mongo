@@ -1,0 +1,10 @@
+# docker-compose.yml
+version: "3.8"
+services:
+  apache_service:
+    container_name: apache_container
+    build: ./docker/apache
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/usr/local/apache2/htdocs
