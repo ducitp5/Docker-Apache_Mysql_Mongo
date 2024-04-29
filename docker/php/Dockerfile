@@ -10,5 +10,8 @@ RUN docker-php-ext-install bcmath mbstring intl opcache
 
 RUN docker-php-ext-install pdo pdo_mysql mysqli
 
+RUN pecl install mongodb
+RUN echo "extension=mongodb.so" >> /usr/local/etc/php/conf.d/mongodb.ini
+
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
