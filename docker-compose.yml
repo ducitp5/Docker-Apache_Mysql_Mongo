@@ -4,18 +4,16 @@ services:
   apache_service:
     container_name: apache_container
     build: ./docker/apache
-#    links:
-#      - php
     ports:
       - "80:80"
     volumes:
       - ./logs/apache:/var/log/apache2
-      - ./src/helloworld:/usr/local/apache2/htdocs/helloworld
+      - ./src:/usr/local/apache2/htdocs/helloworld
   php_service:
     container_name: php_container
     build: ./docker/php
     ports:
       - "9000:9000"
     volumes:
-      - ./src/helloworld:/usr/local/apache2/htdocs/helloworld
+      - ./src/helloworld_win:/usr/local/apache2/htdocs/helloworld
     working_dir: /usr/local/apache2/htdocs/helloworld
