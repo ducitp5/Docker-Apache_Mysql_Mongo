@@ -16,4 +16,4 @@ services:
       - "9000:9000"
     volumes:
       - ./src/helloworld_win:/usr/local/apache2/htdocs/helloworld
-    working_dir: /usr/local/apache2/htdocs/helloworld
+    working_dir: /usr/local/apache2/htdocs/helloworld   #docker exec -it php_container bash  ==> root@8804e79230d4:/usr/local/apache2/htdocs/helloworld
