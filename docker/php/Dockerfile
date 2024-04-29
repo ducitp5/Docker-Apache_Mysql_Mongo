@@ -7,3 +7,6 @@ RUN apt-get install -y libzip-dev libonig-dev libicu-dev
 RUN apt-get install -y autoconf pkg-config libssl-dev
 
 RUN docker-php-ext-install bcmath mbstring intl opcache
+
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
