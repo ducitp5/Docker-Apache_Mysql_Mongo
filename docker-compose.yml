@@ -4,8 +4,6 @@ services:
   apache:
     container_name: apache
     build: ./docker/apache
-    links:
-      - php
     ports:
       - "80:80"
     volumes:
@@ -14,21 +12,11 @@ services:
   php:
     container_name: php
     build: ./docker/php
-    links:
-      - mysql
-      - mongo
     ports:
       - "9000:9000"
     volumes:
       - ./src/helloworld:/usr/local/apache2/htdocs/helloworld
     working_dir: /usr/local/apache2/htdocs/helloworld
-  composer:
-    container_name: composer
-    image: composer/composer
-    volumes:
-      - ./src/helloworld:/usr/local/apache2/htdocs/helloworld
-    working_dir: /usr/local/apache2/htdocs/helloworld
-    command: install
   mysql:
     image: mysql:8.0.27
     container_name: mysql
@@ -44,8 +32,6 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: pma
-    links:
-      - mysql
     environment:
       PMA_HOST: mysql
       PMA_PORT: 3306
@@ -76,8 +62,6 @@ services:
       - ME_CONFIG_MONGODB_URL=mongodb://root:password@mongo:27017/?authSource=admin
       - ME_CONFIG_BASICAUTH_USERNAME=mexpress
       - ME_CONFIG_BASICAUTH_PASSWORD=mexpress
-    links:
-      - mongo
     restart: unless-stopped
     ports:
       - "8081:8081"
