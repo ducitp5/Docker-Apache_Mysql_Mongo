@@ -10,13 +10,13 @@ services:
       - ./logs/apache:/var/log/apache2
       - ./src/helloworld:/usr/local/apache2/htdocs/helloworld
   php:
-    container_name: php
+    container_name: php_container
     build: ./docker/php
     ports:
       - "9000:9000"
     volumes:
       - ./src/helloworld:/usr/local/apache2/htdocs/helloworld
-#    working_dir: /usr/local/apache2/htdocs/helloworld
+    working_dir: /usr/local/apache2/htdocs/helloworld
   mysql:
     image: mysql:8.0.27
     container_name: mysql
