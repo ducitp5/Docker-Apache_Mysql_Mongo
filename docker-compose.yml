@@ -5,7 +5,7 @@ services:
     container_name: apache
     build: ./docker/apache
     ports:
-      - "80:80"
+      - "81:80"
     volumes:
       - ./logs/apache:/var/log/apache2
       - ./src/helloworld:/usr/local/apache2/htdocs/helloworld
@@ -13,7 +13,7 @@ services:
     container_name: php_container
     build: ./docker/php
     ports:
-      - "9000:9000"
+      - "9001:9000"
     volumes:
       - ./src/helloworld:/usr/local/apache2/htdocs/helloworld
     working_dir: /usr/local/apache2/htdocs/helloworld
@@ -27,15 +27,15 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "3306:3306"
+      - "3308:3306"
     volumes:
       - ./database/mysql:/var/lib/mysql
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: pma
     environment:
-      PMA_HOST: mysql_service
-      PMA_PORT: 3306
+      PMA_HOST: ${PMA_HOST}
+      PMA_PORT: ${PMA_PORT}
       PMA_ARBITRARY: 1
     restart: always
     ports:
