@@ -17,7 +17,7 @@ services:
     volumes:
       - ./src/helloworld:/usr/local/apache2/htdocs/helloworld
     working_dir: /usr/local/apache2/htdocs/helloworld
-  mysql:
+  mysql_service:
     image: mysql:8.0.27
     container_name: mysql
     environment:
@@ -34,12 +34,13 @@ services:
     image: phpmyadmin/phpmyadmin
     container_name: pma
     environment:
-      PMA_HOST: mysql
+      PMA_HOST: mysql_service
       PMA_PORT: 3306
       PMA_ARBITRARY: 1
     restart: always
     ports:
-      - "8085:80"
+      - "8086:82"
+    command: apache2-foreground -DFOREGROUND -k start -C "Listen 82"
   mongo:
     image: mongo:5.0
     container_name: mongo
