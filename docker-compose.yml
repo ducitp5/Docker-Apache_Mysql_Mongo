@@ -2,7 +2,6 @@
 version: "3.8"
 services:
   apache:
-    container_name: apache
     build: ./docker/apache
     ports:
       - "81:80"
@@ -10,7 +9,6 @@ services:
       - ./logs/apache:/var/log/apache2
       - ./src/helloworld:/usr/local/apache2/htdocs/helloworld
   php:
-    container_name: php_container
     build: ./docker/php
     ports:
       - "9001:9000"
@@ -19,7 +17,6 @@ services:
     working_dir: /usr/local/apache2/htdocs/helloworld
   mysql_service:
     image: mysql:8.0.27
-    container_name: mysql
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -32,7 +29,6 @@ services:
       - ./database/mysql:/var/lib/mysql
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: pma
     environment:
       PMA_HOST: ${PMA_HOST}
       PMA_PORT: ${PMA_PORT}
@@ -43,7 +39,6 @@ services:
     command: apache2-foreground -DFOREGROUND -k start -C "Listen 82"
   mongo:
     image: mongo:5.0
-    container_name: mongo
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=password
@@ -57,7 +52,6 @@ services:
     command: [--auth]
   mongo-express:
     image: mongo-express
-    container_name: mexpress
     environment:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=root
       - ME_CONFIG_MONGODB_ADMINPASSWORD=password
