@@ -37,7 +37,7 @@ services:
     ports:
       - "8086:82"
     command: apache2-foreground -DFOREGROUND -k start -C "Listen 82"
-  mongo:
+  __MONGO_SERVICE_NAME__:
     image: mongo:5.0
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
@@ -52,10 +52,12 @@ services:
     command: [--auth]
   mongo-express:
     image: mongo-express
+    depends_on:
+      - __MONGO_SERVICE_NAME__
     environment:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=${MONGO_EXPRESS_USERNAME}
       - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_EXPRESS_PASSWORD}
-      - ME_CONFIG_MONGODB_URL=mongodb://${MONGO_EXPRESS_USERNAME}:${MONGO_EXPRESS_PASSWORD}@mongo:27017/?authSource=admin
+      - ME_CONFIG_MONGODB_URL=mongodb://${MONGO_EXPRESS_USERNAME}:${MONGO_EXPRESS_PASSWORD}@__MONGO_SERVICE_NAME__:27017/?authSource=admin
       - ME_CONFIG_BASICAUTH_USERNAME=mexpress
       - ME_CONFIG_BASICAUTH_PASSWORD=mexpress
     restart: unless-stopped
