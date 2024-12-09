@@ -1,4 +1,4 @@
-# docker-compose.yml
+# docker-compose.yml file2
 version: "3.8"
 services:
   apache:
@@ -27,6 +27,9 @@ services:
       - "3308:3306"
     volumes:
       - ./database/mysql:/var/lib/mysql
+    networks:
+      name_duc_network:
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
@@ -37,6 +40,8 @@ services:
     ports:
       - "8086:82"
     command: apache2-foreground -DFOREGROUND -k start -C "Listen 82"
+    networks:
+      - name_duc_network
   mongo_service:
     image: mongo:5.0
     environment:
@@ -63,3 +68,9 @@ services:
     restart: unless-stopped
     ports:
       - "8081:8081"
+
+networks:
+  shared_network:
+#    external: true
+  name_duc_network:
+    external: true
